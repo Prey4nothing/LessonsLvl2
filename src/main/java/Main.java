@@ -1,90 +1,32 @@
-import market.Market;
-import person.customer.Customer;
-import person.seller.Seller;
-import product.Product;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
-    //1) Seller, может добавлять, убирать продукты, выставлять стоимость
-    //2) Customer может покупать товар, может что-то желать
-    //3) Когда seller продает продукты, у него они отнимаются, но добавляются у customer
-    // кэш отнимается у customer, добавляется к seller
-    //4) Поиск товара про продавцу и продукту, либо по продукту
+    private static int count = 0;
 
-    public static void main(String[] args) {
-        Market market = new Market();
-
-        Seller firstSeller = createFirstSeller();
-        Seller secondSeller = createSecondSeller();
-
-        market.addSeller(firstSeller);
-        market.addSeller(secondSeller);
-
-        Customer customer = createFirstCustomer();
-        customer.findProductOnMarket(market, "Алексей", "Ушаков");
-        customer.info();
+    public static void main(String[] args){
+        String array[][] = {{"4", "5", "6", "2"}, {"3", "4", "5", "8"}, {"8", "10", "15", "0"}, {"7", "s", "6", "23"}};
+        try {
+            arraySum(array);
+        } catch (MyArraySizeException | MyArrayDataException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Сумма элементов массива равна: " + count);
     }
 
-    private static Customer createFirstCustomer() {
-        Product firstProduct = new Product();
-        firstProduct.setName(MarketConstants.TOMATOES_PRODUCT_NAME);
-        firstProduct.setQuantity(3);
 
-        Product secondProduct = new Product();
-        secondProduct.setName(MarketConstants.CUCUMBER_PRODUCT_NAME);
-        secondProduct.setQuantity(2);
-
-        return new Customer(List.of(firstProduct, secondProduct), 50);
+    public static void arraySum (String[][] arr) throws MyArraySizeException, MyArrayDataException {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length; j++) {
+                if (arr[i].length != 4 || arr.length != 4){
+                    throw new MyArraySizeException(" Массив должен иметь размер 4х4");
+                }
+                try {
+                    count = count + Integer.parseInt(arr[i][j]);
+                } catch (NumberFormatException e) {
+                    throw new MyArrayDataException("Находится в ячейке " + i + " " + j);
+                }
+            }
+        }
     }
-
-    private static Seller createFirstSeller() {
-        Seller seller = new Seller();
-        seller.setName("Виталий");
-        seller.setLastName("Еремин");
-        seller.setCash(0);
-
-        Product firstProduct = new Product();
-        firstProduct.setName(MarketConstants.TOMATOES_PRODUCT_NAME);
-        firstProduct.setPrice(10);
-        firstProduct.setQuantity(3);
-
-        Product secondProduct = new Product();
-        secondProduct.setName(MarketConstants.CUCUMBER_PRODUCT_NAME);
-        secondProduct.setPrice(2);
-        secondProduct.setQuantity(100);
-
-        List<Product> products = new ArrayList<>();
-        products.add(firstProduct);
-        products.add(secondProduct);
-        seller.setProducts(products);
-
-        return seller;
-    }
-
-    private static Seller createSecondSeller() {
-        Seller seller = new Seller();
-        seller.setName("Алексей");
-        seller.setLastName("Ушаков");
-        seller.setCash(0);
-
-        Product firstProduct = new Product();
-        firstProduct.setName(MarketConstants.TOMATOES_PRODUCT_NAME);
-        firstProduct.setPrice(13);
-        firstProduct.setQuantity(40);
-
-        Product secondProduct = new Product();
-        secondProduct.setName(MarketConstants.CUCUMBER_PRODUCT_NAME);
-        secondProduct.setPrice(10);
-        secondProduct.setQuantity(12);
-
-        List<Product> products = new ArrayList<>();
-        products.add(firstProduct);
-        products.add(secondProduct);
-        seller.setProducts(products);
-
-        return seller;
-    }
-
 }
+
