@@ -4,9 +4,9 @@ public class Main {
     private static int count = 0;
 
     public static void main(String[] args){
-        String array[][] = {{"4", "5", "6", "2"}, {"3", "4", "5", "8"}, {"8", "10", "15", "0"}, {"7", "s", "6", "23"}};
+        String arr[][] = {{"4", "5", "6", "2"}, {"3", "4", "5", "8"}, {"8", "10", "15", "0"}, {"7", "s", "6", "23"}};
         try {
-            arraySum(array);
+            arraySum(arr);
         } catch (MyArraySizeException | MyArrayDataException e) {
             e.printStackTrace();
         }
